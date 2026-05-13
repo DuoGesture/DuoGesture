@@ -701,9 +701,23 @@
         </p>
 
         <div class="figure-box">
-          <img src="resources/duogesture_pipeline.png" alt="DuoGesture Framework Overview">
+          <img src="resources/snapshot.png" alt="DuoGesture High-Level Overview">
           <div class="figure-caption">
-            Overview of DuoGesture. The semantic stream is driven by motion-grounded semantic features, while the beat stream is guided by audio, speaker identity, seed poses, and biomechanical inertial regularization. S-VIB learns a stochastic frame-level gate that dynamically fuses semantic and beat predictions.
+            High-level dual-stream overview. DuoGesture decomposes co-speech gesture synthesis into a semantic stream and a beat stream, coupled by the Semantic Variational Information Bottleneck (S-VIB).
+          </div>
+        </div>
+
+        <div class="figure-box" style="margin-top:16px">
+          <img src="resources/pipeline.png" alt="DuoGesture Pipeline">
+          <div class="figure-caption">
+            DuoGesture pipeline. The semantic stream is driven by motion-grounded semantic features (MGSC), while the beat stream is guided by audio, speaker identity, seed poses, and biomechanical inertial regularization (IBP). S-VIB learns a stochastic frame-level gate that dynamically fuses semantic and beat predictions.
+          </div>
+        </div>
+
+        <div class="figure-box" style="margin-top:16px">
+          <img src="resources/blender.png" alt="Two-Stream Hierarchical Blender">
+          <div class="figure-caption">
+            Two-Stream Hierarchical Blender architecture. Residual VQ-VAE tokens from the semantic and beat branches are fused under S-VIB gate control before decoding.
           </div>
         </div>
 
@@ -847,7 +861,7 @@
         </p>
 
         <div class="figure-box">
-          <img src="resources/qualitative_results.png" alt="Qualitative Results">
+          <img src="resources/comparison.png" alt="Qualitative Results">
           <div class="figure-caption">
             Qualitative comparison across semantic contexts. DuoGesture produces higher-amplitude and more interpretable gestures than SemTalk, EMAGE, and GestureLSM, while better preserving semantic intent and temporal naturalness.
           </div>

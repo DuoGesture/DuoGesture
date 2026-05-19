@@ -453,7 +453,8 @@
       padding: 16px;
     }
 
-    .video-shell video {
+    .video-shell video,
+    .video-shell iframe {
       width: 100%;
       max-width: 920px;
       display: block;
@@ -461,6 +462,11 @@
       border-radius: 18px;
       background: #000;
       border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .video-shell iframe {
+      aspect-ratio: 16 / 9;
+      height: auto;
     }
 
     .video-caption {
@@ -684,8 +690,26 @@
         </h2>
 
         <p class="abstract-text">
-          Co-speech gesture generation requires both semantic expressivity and physically plausible rhythmic motion. Existing holistic gesture models often mix lexically grounded semantic gestures with frequent prosody-aligned beat gestures, limiting semantic grounding, speech-motion alignment, and kinematic smoothness. DuoGesture introduces a neuro-biomechanically motivated dual-stream generator that separates co-speech gesture synthesis into a semantic stream and a beat stream. The two streams are coupled by a Semantic Variational Information Bottleneck, a stochastic frame-level gate that learns when semantic motion should override rhythmic beat motion while avoiding deterministic gate collapse. The semantic stream is conditioned by Motion-Grounded Semantic Conditioning, which replaces purely linguistic word embeddings with text-to-motion representations to provide motion-aligned semantic priors for long-tailed lexical gesture triggers. The beat stream is further regularized by an Inertial Beat Prior, an anthropometric arm-chain-only prior that reduces jitter and improves rhythmic consistency without imposing constraints on expressive semantic frames.
-        </p>
+       //   Co-speech gesture generation requires both semantic expressivity and physically plausible rhythmic motion. Existing holistic gesture models often mix lexically grounded semantic gestures with frequent prosody-aligned beat gestures, limiting semantic grounding, speech-motion alignment, and kinematic smoothness. DuoGesture introduces a neuro-biomechanically motivated dual-stream generator that separates co-speech gesture synthesis into a semantic stream and a beat stream. The two streams are coupled by a Semantic Variational Information Bottleneck, a stochastic frame-level gate that learns when semantic motion should override rhythmic beat motion while avoiding deterministic gate collapse. The semantic stream is conditioned by Motion-Grounded Semantic Conditioning, which replaces purely linguistic word embeddings with text-to-motion representations to provide motion-aligned semantic priors for long-tailed lexical gesture triggers. The beat stream is further regularized by an Inertial Beat Prior, an anthropometric arm-chain-only prior that reduces jitter and improves rhythmic consistency without imposing constraints on expressive semantic frames.
+       Co-speech gesture generation requires both semantic expressivity and biomechan-
+ically plausible rhythmic motion. Existing holistic gesture models mix lexically
+grounded semantic gestures with frequent prosody-aligned beat gestures. This lim-
+its semantic grounding, speech-motion alignment, and kinematic smoothness. We
+propose DuoGesture, a neuro-inspired and biomechanically informed dual-stream
+approach that decomposes co-speech gesture synthesis into coupled semantic
+and beat streams. The two streams are coordinated by a Semantic Variational
+Information Bottleneck, a stochastic frame-level gate that learns when semantic
+gestures should override rhythmic beat motion. The semantic stream is controlled
+by Motion-Grounded Semantic Conditioning, which replaces purely linguistic
+word embeddings with motion-language representations to provide motion-aligned
+semantic priors for long-tailed lexical triggers of gestures. The beat stream is fur-
+ther regularised by an Inertial Beat Prior, an anthropometry-weighted arm-chain
+module that reduces jitter and improves rhythmic consistency without constraining
+semantic frames. Objective evaluations and subjective experiments show that Duo-
+Gesture outperforms strong holistic baselines, while component ablations confirm
+the complementary roles of semantic grounding, stochastic stream selection, and
+biomechanical regularisation.
+      </p>
       </div>
     </section>
 
@@ -877,7 +901,7 @@
         </h2>
 
         <p class="lead">
-          Example videos showing dual-stream co-speech gesture synthesis under different narrative and semantic contexts.
+          Featured videos from the user study, with one explicit comparison against Ground Truth.
         </p>
 
         <div class="swiper demo-swiper">
@@ -885,48 +909,64 @@
 
             <div class="swiper-slide">
               <div class="video-shell">
-                <video controls playsinline>
-                  <source src="video/demo1.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
+                <video controls>
+                   <source src="video/1 1 3.mp4" type="video/mp4">
+                  title="User Study Video 1"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen>
+                </iframe>
                 <div class="video-caption">
-                  Demo 1: Semantic gesture generation under lexical triggers.
+                  User Study 1: Featured evaluation sample.
                 </div>
               </div>
             </div>
 
             <div class="swiper-slide">
               <div class="video-shell">
-                <video controls playsinline>
-                  <source src="video/demo2.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
+                <video controls>
+                   <source src="video/1 2 4.mp4" type="video/mp4">
+                  title="User Study Video 2"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen>
+                </iframe>
                 <div class="video-caption">
-                  Demo 2: Rhythm-aligned beat gesture synthesis.
+                  Against Ground Truth: DuoGesture comparison sample.
                 </div>
               </div>
             </div>
 
             <div class="swiper-slide">
               <div class="video-shell">
-                <video controls playsinline>
-                  <source src="video/demo3.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
+                <video controls>
+                   <source src="video/1 1 3.mp4" type="video/mp4">
+                  title="Comparison Against Ground Truth 1"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen>
+                </iframe>
                 <div class="video-caption">
-                  Demo 3: Dual-stream fusion of semantic and beat motion.
+                  User Study 2: Featured evaluation sample.
                 </div>
               </div>
             </div>
 
             <div class="swiper-slide">
               <div class="video-shell">
-                <video controls playsinline>
-                  <source src="video/demo4.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
+                <video controls>
+                   <source src="video/GT right DuoGes our model left.mp4" type="video/mp4">
+                  title="Comparison Against Ground Truth 2"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen>
+                </iframe>
                 <div class="video-caption">
-                  Demo 4: Natural co-speech gesture generation across narrative contexts.
+                  User Study 3: Featured evaluation sample.
                 </div>
               </div>
             </div>

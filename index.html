@@ -183,6 +183,24 @@
       color: #06111f;
     }
 
+    .btn.video-highlight {
+      border: none;
+      background: linear-gradient(135deg, #fb923c, #f472b6, #a78bfa);
+      color: #06111f;
+      box-shadow: 0 0 22px rgba(244, 114, 182, 0.45), 0 0 48px rgba(251, 146, 60, 0.22);
+      animation: videoPulse 2.6s ease-in-out infinite;
+    }
+
+    .btn.video-highlight:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 0 36px rgba(244, 114, 182, 0.65), 0 0 70px rgba(251, 146, 60, 0.32);
+    }
+
+    @keyframes videoPulse {
+      0%, 100% { box-shadow: 0 0 22px rgba(244, 114, 182, 0.45), 0 0 48px rgba(251, 146, 60, 0.22); }
+      50%       { box-shadow: 0 0 36px rgba(244, 114, 182, 0.70), 0 0 72px rgba(251, 146, 60, 0.38); }
+    }
+
     .stats-strip {
       position: relative;
       z-index: 2;
@@ -252,14 +270,9 @@
     }
 
     .icon {
-      width: 42px;
-      height: 42px;
-      display: inline-grid;
-      place-items: center;
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(34,211,238,0.18), rgba(167,139,250,0.18));
+      display: inline-flex;
+      align-items: center;
       color: #bae6fd;
-      border: 1px solid rgba(255,255,255,0.12);
       flex: 0 0 auto;
     }
 
@@ -562,6 +575,10 @@
           </p>
 
           <div class="button-row">
+            <a class="btn video-highlight" href="#method-video">
+              <i class="fa-solid fa-circle-play"></i>
+              Video Paper Overview
+            </a>
             <a class="btn primary" href="#" target="_blank">
               <i class="fa-solid fa-file-lines"></i>
               Paper
@@ -569,10 +586,6 @@
             <a class="btn" href="https://anonymous.4open.science/r/DuoGesture-E865/" target="_blank">
               <i class="fa-brands fa-github"></i>
               Code
-            </a>
-            <a class="btn" href="#method-video">
-              <i class="fa-solid fa-circle-play"></i>
-              Method Video
             </a>
             <a class="btn" href="#results-video">
               <i class="fa-solid fa-film"></i>
@@ -631,9 +644,6 @@
               </div>
             </div>
 
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
           </div>
         </div>
       </div>

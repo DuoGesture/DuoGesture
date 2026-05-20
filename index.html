@@ -517,6 +517,78 @@
       opacity: 1;
     }
 
+    .motivation-figure {
+      position: relative;
+      z-index: 1;
+      margin-top: 22px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .motivation-figure img {
+      width: 100%;
+      display: block;
+      border-radius: 20px;
+    }
+
+    .motivation-figure .fig-caption {
+      padding: 14px 18px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    .insight-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .insight-box {
+      padding: 18px 20px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.055);
+    }
+
+    .insight-box .ins-label {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #06111f;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    .ins-beat  { background: linear-gradient(135deg, #60a5fa, #22d3ee); }
+    .ins-sem   { background: linear-gradient(135deg, #f472b6, #fb923c); }
+    .ins-ibp   { background: linear-gradient(135deg, #34d399, #60a5fa); }
+
+    .insight-box h4 {
+      margin: 0 0 7px;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .insight-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 680px) {
+      .insight-row { grid-template-columns: 1fr; }
+    }
+
     .footer {
       padding: 34px 0 54px;
       color: var(--muted);
@@ -776,6 +848,54 @@ biomechanical regularisation.
             <h3>Biomechanical Beat Prior</h3>
             <p>
               An anthropometric arm-chain smoother injects inertial structure into the beat branch, reducing jerk while avoiding penalties on expressive semantic frames.
+            </p>
+          </div>
+        </div>
+
+        <h3 class="section-title" style="margin-top:28px;font-size:1.2rem;">
+          <span class="icon"><i class="fa-solid fa-wave-square"></i></span>
+          Why Two Streams? &dash; Motivation for the IBP
+        </h3>
+        <p class="lead" style="margin-top:10px;">
+          Beat and semantic arm-swings have fundamentally different spectral signatures &dash; and that difference is what makes the Inertial Beat Prior both possible and necessary.
+        </p>
+
+        <div class="motivation-figure">
+          <img src="resources/arm_swing_psd.png" alt="Arm-swing spectral analysis: beat vs semantic gestures on BEAT2">
+          <div class="fig-caption">
+            Arm-swing angular velocity analysis on 265 BEAT2 English test clips.
+            <strong>(a)</strong> Energy decay from each clip&rsquo;s spectral peak &dash; beat gestures lose energy sharply (half-BW&nbsp;=&nbsp;0.46&nbsp;Hz) while semantic gestures spread it broadly (0.89&nbsp;Hz, 1.92&times; wider).
+            <strong>(b)</strong> Violin plot of spectral peakedness &dash; beat gestures have a clearer dominant frequency (median 4.63 vs 3.78; 43% vs 29% show a clear peak).
+          </div>
+        </div>
+
+        <div class="insight-row">
+          <div class="insight-box">
+            <span class="ins-label ins-beat">Beat stream</span>
+            <h4>Rhythmic &amp; periodic &dash; like a metronome</h4>
+            <p>
+              Beat arm-swings repeat at a steady pace in sync with speech prosody.
+              Their energy spikes at one tight frequency (half-bandwidth only 0.46&nbsp;Hz),
+              just like a pendulum. 43% of beat windows show a single unmistakable dominant peak.
+            </p>
+          </div>
+          <div class="insight-box">
+            <span class="ins-label ins-sem">Semantic stream</span>
+            <h4>Expressive &amp; varied &dash; like a dance move</h4>
+            <p>
+              Semantic gestures vary freely in speed and timing to express meaning.
+              Their energy spreads nearly <strong>twice as wide</strong> (0.89&nbsp;Hz)
+              and only 29% have a clear spectral peak &dash; they don&rsquo;t follow a single rhythm.
+            </p>
+          </div>
+          <div class="insight-box" style="grid-column: 1 / -1;">
+            <span class="ins-label ins-ibp">IBP takeaway</span>
+            <h4>Apply physics only where motion is already physical</h4>
+            <p>
+              Because beat arm-swings are naturally periodic, we enforce a lightweight
+              anthropometric arm-chain constraint on the beat stream alone &dash; smoothing
+              jitter exactly the way real arm inertia would, without ever penalising
+              the free-form expressive frames of the semantic stream.
             </p>
           </div>
         </div>

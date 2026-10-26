@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DuoGesture: Neuro-Biomechanical Dual-Stream Co-Speech Gesture Generation</title>
+  <title>DuoGesture: Motion-Grounded Semantic Conditioning and Biomechanical Beat Priors for Co-Speech Gesture Generation</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -440,6 +440,68 @@
       gap: 22px;
     }
 
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .results-table th,
+    .results-table td {
+      padding: 9px 12px;
+      text-align: center;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .results-table thead th {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.84rem;
+    }
+
+    .results-table .model {
+      text-align: left;
+    }
+
+    .results-table .venue {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .results-table th.group {
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-right: 1px solid var(--line);
+    }
+
+    .results-table tbody + tbody {
+      border-top: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .results-table tr.ours td {
+      color: #fff;
+    }
+
+    .results-table tr.ours td.model {
+      font-weight: 700;
+    }
+
+    .results-table .rank-1 { background: rgba(96,165,250,0.34); font-weight: 800; }
+    .results-table .rank-2 { background: rgba(96,165,250,0.2); }
+    .results-table .rank-3 { background: rgba(96,165,250,0.1); }
+
+    .two-col > .figure-box {
+      margin-top: 22px;
+    }
+
     .video-section-wrap {
       position: relative;
       z-index: 1;
@@ -639,7 +701,7 @@
           </h1>
 
           <p class="subtitle">
-            Neuro-Biomechanical Dual-Stream Co-Speech Gesture Generation
+            Motion-Grounded Semantic Conditioning and Biomechanical Beat Priors for Co-Speech Gesture Generation
           </p>
 
           <p class="subtitle">
@@ -667,12 +729,12 @@
               <span>FGD on BEAT2 all-speaker setting</span>
             </div>
             <div class="stat">
-              <strong>7.699</strong>
-              <span>Beat Alignment on BEAT2 all-speaker setting</span>
+              <strong>0.348</strong>
+              <span>SRGR (semantic gesture recall) on BEAT2 all-speaker setting</span>
             </div>
             <div class="stat">
-              <strong>12.83</strong>
-              <span>Diversity in full DuoGesture ablation</span>
+              <strong>&minus;0.039</strong>
+              <span>&Delta;LDLJ to ground truth (0 = real-motion smoothness)</span>
             </div>
             <div class="stat">
               <strong>30</strong>
@@ -746,7 +808,7 @@
           <div class="highlight-item">
             <h3>Semantic Variational Information Bottleneck</h3>
             <p>
-              S-VIB introduces a stochastic frame-level gate that learns when semantic motion should override beat motion while avoiding deterministic gate collapse.
+              S-VIB introduces a stochastic frame-level gate that learns when semantic motion should override beat motion without collapsing into a single all-semantic or all-beat path.
             </p>
           </div>
 
@@ -768,24 +830,7 @@
         </h2>
 
         <p class="abstract-text">
-    Co-speech gesture generation requires both semantic expressivity and biomechan-
-ically plausible rhythmic motion. Existing holistic gesture models mix lexically
-grounded semantic gestures with frequent prosody-aligned beat gestures. This lim-
-its semantic grounding, speech-motion alignment, and kinematic smoothness. We
-propose DuoGesture, a neuro-inspired and biomechanically informed dual-stream
-approach that decomposes co-speech gesture synthesis into coupled semantic
-and beat streams. The two streams are coordinated by a Semantic Variational
-Information Bottleneck, a stochastic frame-level gate that learns when semantic
-gestures should override rhythmic beat motion. The semantic stream is controlled
-by Motion-Grounded Semantic Conditioning, which replaces purely linguistic
-word embeddings with motion-language representations to provide motion-aligned
-semantic priors for long-tailed lexical triggers of gestures. The beat stream is fur-
-ther regularised by an Inertial Beat Prior, an anthropometry-weighted arm-chain
-module that reduces jitter and improves rhythmic consistency without constraining
-semantic frames. Objective evaluations and subjective experiments show that Duo-
-Gesture outperforms strong holistic baselines, while component ablations confirm
-the complementary roles of semantic grounding, stochastic stream selection, and
-biomechanical regularisation.
+          Co-speech gesture generation requires both semantic expressivity and biomechanically plausible rhythmic motion. Existing holistic gesture models mix lexically grounded semantic gestures with frequent prosody-aligned beat gestures. This limits semantic grounding, speech-motion alignment, and kinematic smoothness. We propose DuoGesture, a neuro-inspired and biomechanically informed approach that decomposes co-speech gesture synthesis into semantic and beat streams. The two streams are coordinated by a Semantic Variational Information Bottleneck, a stochastic frame-level gate that learns when semantic gestures should override rhythmic beat motion. The semantic stream is controlled by Motion-Grounded Semantic Conditioning, which replaces purely linguistic word embeddings with motion-language representations to provide motion-aligned semantic priors for long-tailed lexical triggers of gestures. The beat stream is further regularised by an Inertial Beat Prior, an anthropometry-weighted arm-chain module that reduces jitter and improves rhythmic consistency without constraining semantic frames. Objective evaluations and subjective experiments show that DuoGesture outperforms strong baselines, while component ablations confirm the complementary roles of semantic grounding, stochastic stream selection, and biomechanical regularisation.
       </p>
       </div>
     </section>
@@ -827,7 +872,7 @@ biomechanical regularisation.
             <div class="tag">MGSC</div>
             <h3>Motion-Grounded Semantic Conditioning</h3>
             <p>
-              Instead of relying on BERT or FastText embeddings, MGSC uses a text-to-motion latent space to provide semantic features that are already aligned with gesture morphology.
+              Word-level FastText features keep the timing of each spoken word, but they query motion-style and emotion embeddings from a pretrained text-to-motion model (TMR) instead of a purely linguistic or image-text encoder. The resulting semantic features are aligned with how people move, not only with what was said.
             </p>
           </div>
 
@@ -835,7 +880,7 @@ biomechanical regularisation.
             <div class="tag">S-VIB</div>
             <h3>Stochastic Semantic Gate</h3>
             <p>
-              A variational bottleneck predicts frame-level semantic weights, encouraging temporal sparsity and preventing the gate from collapsing into a deterministic all-semantic state.
+              A variational bottleneck combines <em>what</em> to gesture (the MGSC feature) with <em>when</em> to gesture (a low-capacity HuBERT timing projection) and predicts a per-frame semantic weight, supervised by BEAT2 semantic annotations.
             </p>
           </div>
 
@@ -843,7 +888,7 @@ biomechanical regularisation.
             <div class="tag">IBP</div>
             <h3>Biomechanical Beat Prior</h3>
             <p>
-              An anthropometric arm-chain smoother injects inertial structure into the beat branch, reducing jerk while avoiding penalties on expressive semantic frames.
+              A training-time loss penalises deviation from constant-velocity motion on the beat stream&rsquo;s arm chain, weighted per joint by De Leva body-segment masses. It is switched off on semantic frames and adds no cost at inference.
             </p>
           </div>
         </div>
@@ -886,12 +931,11 @@ biomechanical regularisation.
           </div>
           <div class="insight-box" style="grid-column: 1 / -1;">
             <span class="ins-label ins-ibp">IBP takeaway</span>
-            <h4>Apply physics only where motion is already physical</h4>
+            <h4>Regularise only where motion is rhythmic</h4>
             <p>
-              Because beat arm-swings are naturally periodic, we enforce a lightweight
-              anthropometric arm-chain constraint on the beat stream alone &dash; smoothing
-              jitter exactly the way real arm inertia would, without ever penalising
-              the free-form expressive frames of the semantic stream.
+              Because beat arm-swings are naturally periodic, IBP adds a lightweight,
+              mass-weighted arm-chain loss to the beat stream alone. It reduces jitter
+              without penalising the free-form expressive frames of the semantic stream.
             </p>
           </div>
         </div>
@@ -899,79 +943,150 @@ biomechanical regularisation.
     </section>
 
     <section class="section">
-      <div class="two-col">
-        <div class="section-card">
-          <h2 class="section-title">
-            <span class="icon"><i class="fa-solid fa-chart-line"></i></span>
-            Quantitative Results
-          </h2>
+      <div class="section-card">
+        <h2 class="section-title">
+          <span class="icon"><i class="fa-solid fa-chart-line"></i></span>
+          Quantitative Results
+        </h2>
 
-          <p class="desc-text">
-            On BEAT2, DuoGesture improves distributional fidelity over strong holistic baselines in both one-speaker and all-speaker settings, while maintaining competitive beat alignment and motion diversity.
-          </p>
+        <p class="desc-text">
+          On BEAT2, DuoGesture achieves the lowest Fr&eacute;chet Gesture Distance (FGD) in both the one-speaker and all-speaker settings. It also leads on the two metrics that test our contributions directly: semantic-relevant gesture recall (SRGR) for MGSC, and smoothness relative to ground truth (&Delta;LDLJ) for IBP. On the secondary diagnostics (beat alignment, diversity, facial MSE and LVD) it remains competitive.
+        </p>
 
-          <div class="results-grid">
-            <div class="metric">
-              <div class="name">One Speaker FGD</div>
-              <div class="value">4.101</div>
-              <div class="note">Lower is better; improves over PyraMotion and SemTalk.</div>
-            </div>
-
-            <div class="metric">
-              <div class="name">All Speakers FGD</div>
-              <div class="value">4.081</div>
-              <div class="note">Best reported all-speaker FGD among compared methods.</div>
-            </div>
-
-            <div class="metric">
-              <div class="name">All Speakers BA</div>
-              <div class="value">7.699</div>
-              <div class="note">Competitive speech-motion rhythmic alignment.</div>
-            </div>
+        <div class="results-grid">
+          <div class="metric">
+            <div class="name">One Speaker FGD</div>
+            <div class="value">4.101</div>
+            <div class="note">Lower is better; next best is GestureLSM (4.247).</div>
           </div>
 
-          <div class="figure-box">
-            <img src="resources/Website%20Resources/Overall%20comparison%20on%20BEAT2.png" alt="Quantitative Results">
-            <div class="figure-caption">
-              Quantitative comparison on BEAT2. DuoGesture achieves strong overall fidelity and alignment, showing the benefit of dual-stream modeling, motion-grounded semantics, and biomechanical beat regularization.
-            </div>
+          <div class="metric">
+            <div class="name">All Speakers FGD</div>
+            <div class="value">4.081</div>
+            <div class="note">Lower is better; next best is GestureLSM (4.268).</div>
+          </div>
+
+          <div class="metric">
+            <div class="name">All Speakers SRGR</div>
+            <div class="value">0.348</div>
+            <div class="note">Highest semantic gesture recall in both settings.</div>
           </div>
         </div>
 
-        <div class="section-card">
-          <h2 class="section-title">
-            <span class="icon"><i class="fa-solid fa-flask"></i></span>
-            Component Ablation
-          </h2>
+        <div class="figure-box">
+          <div class="table-wrap">
+            <table class="results-table">
+              <thead>
+                <tr><th>Setting</th><th class="model">Model</th><th>FGD&nbsp;&times;10<sup>&minus;1</sup>&nbsp;&darr;</th><th>BA&nbsp;&times;10<sup>&minus;1</sup>&nbsp;&uarr;</th><th>Diversity&nbsp;&uarr;</th><th>MSE&nbsp;&times;10<sup>&minus;3</sup>&nbsp;&darr;</th><th>LVD&nbsp;&times;10<sup>&minus;5</sup>&nbsp;&darr;</th><th>SRGR&nbsp;&uarr;</th><th>&Delta;LDLJ&nbsp;&rarr;&nbsp;0</th></tr>
+              </thead>
+              <tbody>
+                <tr><th class="group" rowspan="10">One speaker</th><td class="model">TalkSHOW <span class="venue">(CVPR 2023)</span></td><td>6.209</td><td>6.947</td><td>13.47</td><td>7.791</td><td>7.771</td><td>0.248</td><td>1.6520</td></tr>
+                <tr><td class="model">AMUSE<sup>*</sup> <span class="venue">(CVPR 2024)</span></td><td>12.11</td><td class="rank-1">8.318</td><td class="rank-1">14.93</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td></tr>
+                <tr><td class="model">ProbTalk<sup>*</sup> <span class="venue">(CVPR 2024)</span></td><td>5.040</td><td>7.711</td><td>13.27</td><td>8.617</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td></tr>
+                <tr><td class="model">EMAGE <span class="venue">(CVPR 2024)</span></td><td>5.512</td><td>7.724</td><td>13.06</td><td>7.680</td><td>7.556</td><td>0.314</td><td class="rank-2">0.0470</td></tr>
+                <tr><td class="model">MambaTalk<sup>*</sup> <span class="venue">(NeurIPS 2024)</span></td><td>5.366</td><td class="rank-2">7.812</td><td class="rank-2">13.95</td><td class="rank-1">6.289</td><td class="rank-1">6.897</td><td>&ndash;</td><td>&ndash;</td></tr>
+                <tr><td class="model">RAG-Gesture<sup>*</sup> <span class="venue">(CVPR 2025)</span></td><td>8.080</td><td>7.340</td><td>11.97</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td></tr>
+                <tr><td class="model">GestureLSM <span class="venue">(ICCV 2025)</span></td><td class="rank-2">4.247</td><td>7.290</td><td class="rank-3">13.76</td><td class="rank-3">7.139</td><td>7.469</td><td class="rank-2">0.320</td><td>1.5138</td></tr>
+                <tr><td class="model">SemTalk <span class="venue">(ICCV 2025)</span></td><td class="rank-3">4.278</td><td class="rank-3">7.770</td><td>12.91</td><td>7.153</td><td class="rank-2">6.938</td><td class="rank-3">0.315</td><td class="rank-3">&minus;0.5910</td></tr>
+                <tr><td class="model">PyraMotion<sup>*</sup> <span class="venue">(NeurIPS 2025)</span></td><td>4.612</td><td>7.420</td><td>13.42</td><td>7.176</td><td class="rank-3">7.270</td><td>&ndash;</td><td>&ndash;</td></tr>
+                <tr class="ours"><td class="model">DuoGesture (ours)</td><td class="rank-1">4.101</td><td>7.557</td><td>12.34</td><td class="rank-2">7.103</td><td>7.646</td><td class="rank-1">0.343</td><td class="rank-1">&minus;0.0304</td></tr>
+              </tbody>
+              <tbody>
+                <tr><th class="group" rowspan="5">All speakers</th><td class="model">TalkSHOW <span class="venue">(CVPR 2023)</span></td><td>6.145</td><td>6.863</td><td class="rank-1">13.12</td><td>7.953</td><td>7.824</td><td>0.257</td><td>1.7360</td></tr>
+                <tr><td class="model">EMAGE <span class="venue">(CVPR 2024)</span></td><td>5.643</td><td class="rank-1">7.707</td><td class="rank-2">12.92</td><td class="rank-3">7.694</td><td class="rank-2">7.593</td><td class="rank-2">0.326</td><td class="rank-2">0.0530</td></tr>
+                <tr><td class="model">GestureLSM <span class="venue">(ICCV 2025)</span></td><td class="rank-2">4.268</td><td>5.250</td><td>11.20</td><td class="rank-2">7.582</td><td>7.685</td><td class="rank-3">0.305</td><td>1.5386</td></tr>
+                <tr><td class="model">SemTalk <span class="venue">(ICCV 2025)</span></td><td class="rank-3">5.214</td><td class="rank-3">7.689</td><td>12.74</td><td class="rank-3">7.612</td><td class="rank-1">7.498</td><td>0.302</td><td class="rank-3">&minus;0.6020</td></tr>
+                <tr class="ours"><td class="model">DuoGesture (ours)</td><td class="rank-1">4.081</td><td class="rank-2">7.699</td><td class="rank-3">12.83</td><td class="rank-1">7.502</td><td class="rank-3">7.658</td><td class="rank-1">0.348</td><td class="rank-1">&minus;0.0390</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="figure-caption">
+            Comparison on BEAT2 (one speaker, top; all speakers, bottom). Rows marked * are taken from PyraMotion under the same protocol, so SRGR and &Delta;LDLJ are unavailable for them; all other rows are our own runs. Shading marks the best, second and third result per column within each block. &Delta;LDLJ is the signed difference to ground truth: positive values indicate over-smoothing, negative values excess jitter.
+          </div>
+        </div>
+      </div>
+    </section>
 
-          <p class="desc-text">
-            Component-wise ablations show that MGSC drives most of the FGD gain, S-VIB improves diversity and prevents gate collapse, and IBP preserves beat consistency with minimal trade-off.
-          </p>
+    <section class="section">
+      <div class="section-card">
+        <h2 class="section-title">
+          <span class="icon"><i class="fa-solid fa-flask"></i></span>
+          Ablation Studies
+        </h2>
 
-          <div class="results-grid">
-            <div class="metric">
-              <div class="name">Baseline FGD</div>
-              <div class="value">5.214</div>
-              <div class="note">SemTalk baseline.</div>
+        <p class="desc-text">
+          All ablations use the all-speaker setting. Removing MGSC costs the most (FGD 4.081 &rarr; 4.803), more than removing S-VIB or IBP. Replacing the text-to-motion encoder (TMR) with CLIP lowers semantic recall, and the anthropometric De Leva weighting is what brings motion smoothness close to ground truth: uniform smoothing over-smooths, while no prior leaves excess jitter.
+        </p>
+
+        <div class="results-grid">
+          <div class="metric">
+            <div class="name">w/o MGSC FGD</div>
+            <div class="value">4.803</div>
+            <div class="note">S-VIB and IBP only, without motion-grounded semantics.</div>
+          </div>
+
+          <div class="metric">
+            <div class="name">Full model FGD</div>
+            <div class="value">4.081</div>
+            <div class="note">MGSC + S-VIB + IBP combined.</div>
+          </div>
+
+          <div class="metric">
+            <div class="name">De Leva IBP &Delta;LDLJ</div>
+            <div class="value">&minus;0.039</div>
+            <div class="note">vs. +1.279 for uniform IBP and &minus;0.490 without IBP.</div>
+          </div>
+        </div>
+
+        <div class="figure-box">
+            <div class="table-wrap">
+              <table class="results-table compact">
+                <thead><tr><th class="model">Variant</th><th>MGSC</th><th>S-VIB</th><th>IBP</th><th>FGD&nbsp;&darr;</th><th>BA&nbsp;&uarr;</th><th>Diversity&nbsp;&uarr;</th></tr></thead>
+                <tbody>
+                <tr><td class="model">(a) w/o MGSC (S-VIB + IBP only)</td><td>&ndash;</td><td>&#10003;</td><td>&#10003;</td><td>4.803</td><td>7.531</td><td>12.61</td></tr>
+                <tr><td class="model">(b) MGSC only (linear &sigma;-gate)</td><td>&#10003;</td><td>&ndash;</td><td>&ndash;</td><td>4.306</td><td>7.551</td><td>12.52</td></tr>
+                <tr><td class="model">(c) MGSC + S-VIB (no IBP)</td><td>&#10003;</td><td>&#10003;</td><td>&ndash;</td><td>4.178</td><td>7.446</td><td>12.77</td></tr>
+                <tr><td class="model">(d) MGSC + IBP (linear &sigma;-gate)</td><td>&#10003;</td><td>&ndash;</td><td>&#10003;</td><td>4.137</td><td>7.557</td><td>12.65</td></tr>
+                <tr class="ours"><td class="model">(e) Full DuoGesture</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td><strong>4.081</strong></td><td><strong>7.699</strong></td><td><strong>12.83</strong></td></tr>
+                </tbody>
+              </table>
             </div>
+          <div class="figure-caption">
+            Component-wise ablation: each row removes or replaces one component while holding the others fixed.
+          </div>
+        </div>
 
-            <div class="metric">
-              <div class="name">+ MGSC FGD</div>
-              <div class="value">4.306</div>
-              <div class="note">Large gain from motion-grounded semantics.</div>
+        <div class="two-col">
+          <div class="figure-box">
+            <div class="table-wrap">
+              <table class="results-table compact">
+                <thead><tr><th class="model">MGSC condition</th><th>FGD&nbsp;&darr;</th><th>SRGR&nbsp;&uarr;</th></tr></thead>
+                <tbody>
+                <tr class="ours"><td class="model">Full MGSC (TMR + emotion)</td><td><strong>4.081</strong></td><td><strong>0.348</strong></td></tr>
+                <tr><td class="model">Without emotion</td><td>4.110</td><td>0.335</td></tr>
+                <tr><td class="model">CLIP instead of TMR</td><td>4.436</td><td>0.318</td></tr>
+                <tr><td class="model">CLIP, without emotion</td><td>4.332</td><td>0.305</td></tr>
+                </tbody>
+              </table>
             </div>
-
-            <div class="metric">
-              <div class="name">Full FGD</div>
-              <div class="value">4.081</div>
-              <div class="note">Best overall configuration.</div>
+            <div class="figure-caption">
+              MGSC input ablation. Swapping TMR for CLIP lowers SRGR from 0.348 to 0.318; removing the emotion embedding has a smaller effect.
             </div>
           </div>
 
           <div class="figure-box">
-            <img src="resources/Website%20Resources/Componentwise%20ablation.png" alt="Ablation Results">
+            <div class="table-wrap">
+              <table class="results-table compact">
+                <thead><tr><th class="model">IBP variant</th><th>FGD&nbsp;&darr;</th><th>BA&nbsp;&uarr;</th><th>Diversity&nbsp;&uarr;</th><th>&Delta;LDLJ&nbsp;&rarr;&nbsp;0</th></tr></thead>
+                <tbody>
+                <tr><td class="model">No IBP</td><td>4.178</td><td>7.446</td><td>12.77</td><td>&minus;0.4904</td></tr>
+                <tr><td class="model">Uniform IBP</td><td>4.278</td><td>7.450</td><td>12.80</td><td>+1.2790</td></tr>
+                <tr class="ours"><td class="model">De Leva IBP</td><td><strong>4.081</strong></td><td><strong>7.699</strong></td><td><strong>12.83</strong></td><td><strong>&minus;0.0390</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
             <div class="figure-caption">
-              Ablation results demonstrate the complementary roles of MGSC, S-VIB, and IBP. The full model achieves the best balance between realism, diversity, and beat alignment.
+              IBP ablation. Only the anthropometric (De Leva) weighting brings &Delta;LDLJ close to zero while also giving the largest beat-alignment gain.
             </div>
           </div>
         </div>
@@ -986,13 +1101,13 @@ biomechanical regularisation.
         </h2>
 
         <p class="lead">
-          A controlled user study was conducted using 35-second clips from the BEAT2 test set across six narrated topics. Thirty native English speakers evaluated randomly ordered sequences on naturalness, diversity, and alignment with speech content and timing.
+          We ran a perceptual study with 35-second clips from the BEAT2 test set across six narrated topics, comparing Ground Truth, DuoGesture, SemTalk and EMAGE. Thirty native English-speaking participants from the UK (balanced by self-reported gender) rated 24 videos on a five-point Likert scale for naturalness, motion diversity, and alignment with speech content and timing. The order of methods and clips was randomised for each participant.
         </p>
 
         <div class="figure-box">
           <img src="resources/user_study.png" alt="User Study Results">
           <div class="figure-caption">
-            User study results comparing Ground Truth, DuoGesture, SemTalk, and EMAGE across naturalness, diversity, and speech-content alignment. Error bars denote participant-level standard deviation, with significance markers indicating statistical differences.
+            User study results comparing Ground Truth, DuoGesture, SemTalk, and EMAGE. Ground Truth is rated highest, as expected; among the generated motions, DuoGesture receives the highest ratings on all three axes. Stars mark significant differences.
           </div>
         </div>
       </div>
@@ -1006,13 +1121,13 @@ biomechanical regularisation.
         </h2>
 
         <p class="lead">
-          DuoGesture generates clearer, more content-aware gestures for semantic phrases such as “to get,” “I can share,” and “more drama,” while maintaining natural rhythmic consistency for beat gestures.
+          For semantic phrases such as “to get,” “I can share,” and “more drama,” DuoGesture produces clearer arm trajectories with a more visible, phrase-dependent structure. For the beat-dominant phrase “in this way,” the motion stays temporally coherent with the speech rhythm without excessive smoothing.
         </p>
 
         <div class="figure-box">
           <img src="resources/comparison.png" alt="Qualitative Results">
           <div class="figure-caption">
-            Qualitative comparison across semantic contexts. DuoGesture produces higher-amplitude and more interpretable gestures than SemTalk, EMAGE, and GestureLSM, while better preserving semantic intent and temporal naturalness.
+            Qualitative comparison across semantic and beat-dominant speech contexts. SemTalk and GestureLSM tend to generate weaker or more ambiguous movements, while EMAGE often produces plausible but less semantically differentiated gestures.
           </div>
         </div>
       </div>
@@ -1092,8 +1207,7 @@ biomechanical regularisation.
   </main>
 
   <footer class="footer container">
-    Built with HTML, CSS, and Swiper.js · DuoGesture Project Page<br>
-    Replace placeholder links, figures, and videos after uploading final assets.
+    DuoGesture Project Page
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
